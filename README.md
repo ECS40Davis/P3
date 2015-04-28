@@ -18,7 +18,6 @@ To do:
 
 Issue: Not all cities with airports are listed in the cityArray.
 - Guess: readAirports and readCities are incorrect.
-- 
 
 Fixed Errors:
 1. error: passing XXX as 'this' argument of XXX discard qualifiers
