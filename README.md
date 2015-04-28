@@ -2,10 +2,12 @@
 Converting C to C++
 
 Naming Convention:
+
 _* = original code
  * = Sean Davis' modified code
 
 Progress: 
+
 1. Converted structs to classes
 
 To do:
