@@ -37,7 +37,6 @@ void run(const Vector *cities)
 int main(int argc, char** argv) 
 {
   Vector cities;
-  cities.initialize();
   cities.readCities();
   cities.readAirports();
   cities.cleanCities();
@@ -46,9 +45,8 @@ int main(int argc, char** argv)
 //  int i;
 //  for(i = 0; i < cities.count; i++){
     //printf("%s %s\n", cities.cityArray[i].airport, cities.cityArray[rand() % cities.count].airport);
-//    printf("%s %s %lf %lf\n", cities.cityArray[i].name, cities.cityArray[i].airport, cities.cityArray[i].latitude, cities.cityArray[i].longitude);
+//    printf("%s %s %d %lf\n", cities.cityArray[i].name, cities.cityArray[i].state, cities.cityArray[i].population, cities.cityArray[i].longitude);
 //  }
   run(&cities);
-  cities.deallocate();
   return 0;
 } // main())
