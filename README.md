@@ -37,4 +37,5 @@ Helpful Hints:
 - String to char *: http://stackoverflow.com/questions/347949/how-to-convert-a-stdstring-to-const-char-or-char
 - sscanf double = %lf
 - const char * to char *: http://www.cplusplus.com/forum/general/32861/
+  - ex. char *dup = strdup(str.c_str());
 - strtok with strings: http://stackoverflow.com/questions/289347/using-strtok-with-a-stdstring
