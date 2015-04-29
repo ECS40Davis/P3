@@ -8,18 +8,22 @@ _* = original code
 
 Progress: 
 
-1. Converted structs to classes
+1. Converted structs to classes.
+2. Replace printf with cout statements.
+3. Replace scanf with cin statements.
+4. Changed structs to classes.
 
 To do:
-- Replace printf with cout statements.
-- Replace scanf with cin statements.
-- Replace FILE* declarations and assignments with ifstream declarations.
-- Replace fgets with getline. Note that getline does not place the '\n' in the array.
-- Don't forget to add "using namespace std;" to any files with C++ header files.
-- ... Everything practically. xD
-
-Issue: Not all cities with airports are listed in the cityArray.
-- Guess: readAirports and readCities are incorrect.
+- 1.3 Replace FILE* declarations and assignments with ifstream declarations.
+- 1.4 Replace fgets with getline. Note that getline does not place the '\n' in the array.
+- 3.3 Change fopen() to an ifstream constructor, printf() to cout <<, scanf to cin >>, and fgets() to getline().
+- 4.1.4 Make initialize() the constructor for the class.
+- 4.1.5 Make deallocate() the destructor for the class.
+- 4.2.3 Make initialize() the constructor. Note that constructors have no return value.
+- 4.2.4 Make deallocate() the destructor for the class. Note that destructors have no return value.
+- 4.3.2 Eliminate the calls to initialize() and deallocate(). They will be called implicitly.
+- 5.1.2 You will have to retain the deallocate() function for readAirports(), but make a copy of it for the destructor.
+- 6 Adding the ability to list all of the traffic from a specific airport. 
 
 Fixed Errors:
 1. error: passing XXX as 'this' argument of XXX discard qualifiers
