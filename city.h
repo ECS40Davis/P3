@@ -1,12 +1,15 @@
 #ifndef CITY_H
 #define	CITY_H
 // Author: Sean Davis
-#include <cstdio>
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include <cstdlib>
+#include <cmath>
 using namespace std;
 
 class City
 {
-public:
   double longitude;
   double latitude;
   char *name;
@@ -14,7 +17,7 @@ public:
   char airport[4];
   int population;
 
-
+public:
   void initialize();
   void deallocate();
   void calcDistance(const City *city1)const;
