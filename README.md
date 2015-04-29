@@ -13,14 +13,9 @@ Progress:
 3. Replace scanf with cin statements.
 4. Changed structs to classes.
 5. File manipulation from C -> C++
+6. Created default constructor and destructor.
 
 To do:
-- 4.1.4 Make initialize() the constructor for the class.
-- 4.1.5 Make deallocate() the destructor for the class.
-- 4.2.3 Make initialize() the constructor. Note that constructors have no return value.
-- 4.2.4 Make deallocate() the destructor for the class. Note that destructors have no return value.
-- 4.3.2 Eliminate the calls to initialize() and deallocate(). They will be called implicitly.
-- 5.1.2 You will have to retain the deallocate() function for readAirports(), but make a copy of it for the destructor.
 - 6 Adding the ability to list all of the traffic from a specific airport. 
 
 Fixed Errors:
