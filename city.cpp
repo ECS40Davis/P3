@@ -63,14 +63,16 @@ bool City::isEqual(const City *city)
 }  // isName()
 
 //<---------------------------------------------------------do
-void City::readCity(FILE *fp)
+void City::readCity(fstream *fp)
 {
-  char line[1000], *ptr;
+  string line;
+  char *ptr;
   
-  if (!fgets(line, 1000, fp) || !strstr(line, ","))
+  if (!getline(*fp, line) || !strstr(line.c_str(), ","))
     return;
-  
-  ptr = strtok(line, ",");
+
+  char *line_copy = strdup(line.c_str());
+  ptr = strtok(line_copy, ",");
   
   if (ptr)
   {  
@@ -82,6 +84,7 @@ void City::readCity(FILE *fp)
     population = atoi(strtok(NULL, ",\n"));
 
   } // if something on line
+  delete [] line_copy;
 }  // readCity()
 
 void City::readAirport(char *line)
