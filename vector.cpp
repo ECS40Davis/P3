@@ -59,22 +59,23 @@ int Vector::findAirport(const char* airpor)const
   return -1;
 }  // findAirport()
 
-//<----------------------------------------------------------do
 void Vector::readAirports()
 {
-  char line[1000];
+  string line;
   City city;
   city.initialize();
   
-  FILE *fp = fopen("airportLL.txt", "r");
-//  fstream file;
-//  file.open("airportLL.txt");
+  fstream file;
+  file.open("airportLL.txt");
 
-  while (fgets(line, 1000, fp))
+  while (std::getline(file, line))
   {
     if (line[0] == '[')
     {
-      city.readAirport(line);
+      char * temp = new char[line.size()+1];
+      copy(line.begin(), line.end(), temp);
+      temp[line.size()] = '\0';
+      city.readAirport(temp);
       
       for (int i = 0; i < count; i++)
         if (cityArray[i].isEqual(&city))
@@ -91,19 +92,20 @@ void Vector::readAirports()
 //<----------------------------------------------------------do
 void Vector::readCities()
 {
-  FILE *fp = fopen("citypopulations.csv", "r");
-  
-  while(!feof(fp))
+  fstream file;
+  file.open("citypopulations.csv");
+
+  while(!file.eof())
   {
     if (size == count)
       resize();
 
-    cityArray[count++].readCity(fp);
+    cityArray[count++].readCity(&file);
 
   } // while more in file
   
   count--;
-  fclose(fp);
+  file.close();
 
 }  // readCities()
 
