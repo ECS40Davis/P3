@@ -1,15 +1,5 @@
-#include <cstdio>
-#include <cstring>
-#include <cstdlib>
-#include <cmath>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 
 #include "city.h"
-using namespace std;
 
 void City::initialize()
 {
@@ -22,10 +12,10 @@ void City::initialize()
 void City::deallocate()
 {
   if (name)
-    free(name);
+    delete name;
 
   if (state)
-    free(state);
+    delete state;
 }  // deallocate()
 
 
@@ -42,8 +32,8 @@ void City::calcDistance(const City *city1)const
   if (distance < 100)
     passengers = 0;
 
-  printf("%d passengers fly the %d miles from\n%s,%s to %s,%s\n", passengers,
-    distance, city1->name, city1->state, name, state);
+  cout<<distance<<" passengers fly the "<<city1->name<<" miles from\n"
+      <<passengers<<","<<city1->state<<" to "<<name<<","<<state<<"\n";
   
 }  // calcDistance())
 
@@ -84,12 +74,13 @@ void City::readCity(FILE *fp)
   
   if (ptr)
   {  
-    name = (char*) malloc(strlen(ptr) + 1);
+    name = new char[strlen(ptr) + 1];
     strcpy(name, ptr);
     ptr = strtok(NULL, ",");
-    state = (char*) malloc(strlen(ptr) + 1);
+    state = new char[strlen(ptr) + 1];
     strcpy(state, ptr);
     population = atoi(strtok(NULL, ",\n"));
+
   } // if something on line
 }  // readCity()
 
@@ -102,7 +93,7 @@ void City::readAirport(char *line)
   latitude = atof(strtok(NULL, " "));
   longitude = atof(strtok(NULL, " "));
   ptr = strtok(NULL, ",") + 1;
-  name = (char*) malloc(strlen(ptr) + 1);
+  name = new char[strlen(ptr) + 1];
   strcpy(name, ptr);
 }  // readAirport
 
