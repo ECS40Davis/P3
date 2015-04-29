@@ -2,22 +2,14 @@
 
 #include "vector.h"
 
-void Vector::initialize()
+Vector::Vector():size(10), count(0)
 {
-  size = 10;
-  count = 0;
   cityArray = new City[size];
-  
-  for (int i = 0; i < size; i++)
-    cityArray->initialize();
-}  // initialize()
+}  // default constructor
 
 
-void Vector::deallocate()
+Vector::~Vector()
 {
-  for (int i = 0; i < count; i++)
-    cityArray->deallocate();
-
   delete [] cityArray;
 }  // deallocate())
 
@@ -35,7 +27,6 @@ void Vector::cleanCities()
   {
     if (!cityArray[i].hasAirport())
     {
-      cityArray[i].deallocate();
       cityArray[i] = cityArray[--count];
     }  // if city does not have an airport
     else // city has an airport
@@ -47,8 +38,7 @@ void Vector::cleanCities()
 int Vector::findAirport(const char* airpor)const
 {
   City city;
-  
-  city.initialize();
+
   city.setAirport(airpor);
   
   for (int i = 0; i < count; i++)
@@ -63,8 +53,7 @@ void Vector::readAirports()
 {
   string line;
   City city;
-  city.initialize();
-  
+
   fstream file;
   file.open("airportLL.txt");
 
@@ -78,18 +67,17 @@ void Vector::readAirports()
       city.readAirport(temp);
       
       for (int i = 0; i < count; i++)
+      {
         if (cityArray[i].isEqual(&city))
         {
           cityArray[i].copyLocation(&city);
           break;
         }  // if found a matching name
-      
-      city.deallocate();
+      }
     }  // if an airport line
   }  // while
 }  // readAirports()
 
-//<----------------------------------------------------------do
 void Vector::readCities()
 {
   fstream file;
@@ -114,15 +102,12 @@ void Vector::resize()
 {
   int i;
   City *temp = new City[2 * size];
-  
   for (i = 0; i < size; i++)
+  {
     temp[i] = cityArray[i];
+  }
   
   size *= 2;
-  
-  for ( ;i < size; i++)
-    temp[i].initialize();
-    
   delete [] cityArray;
   cityArray = temp;
 }  // resize()
