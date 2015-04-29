@@ -11,6 +11,7 @@ using namespace std;
 
 class Vector
 {
+private:
   City *cityArray;
   int size;
   int count;
@@ -18,8 +19,8 @@ class Vector
   void resize();
 
 public:
-  void initialize();
-  void deallocate();
+  Vector(); //default constructor
+  ~Vector(); //default destructor
   void calcDistance(int index1, int index2)const;
   void cleanCities();
   int findAirport(const char *airport)const;
