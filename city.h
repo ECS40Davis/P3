@@ -10,6 +10,7 @@ using namespace std;
 
 class City
 {
+private:
   double longitude;
   double latitude;
   char *name;
@@ -18,8 +19,9 @@ class City
   int population;
 
 public:
-  void initialize();
-  void deallocate();
+  City(); //default constructor
+  ~City(); //default destructor
+  City& operator=(const City &rhs);
   void calcDistance(const City *city1)const;
   void copyLocation(const City *srcCity);
   bool hasAirport();
