@@ -1,23 +1,51 @@
 
 #include "city.h"
 
-void City::initialize()
+City::City():name(NULL), state(NULL)
 {
-  name = NULL;
-  state = NULL;
   airport[0] = '\0';  // sentinel value
-}  // initialize()
+} // default constructor
 
 
-void City::deallocate()
+City::~City()
 {
   if (name)
-    delete name;
+    delete [] name;
 
   if (state)
-    delete state;
-}  // deallocate()
+    delete [] state;
+}  // default destructor
 
+City& City::operator=(const City &rhs)
+{
+  if (this == &rhs)
+    return *this;
+
+  longitude = rhs.longitude;
+  latitude = rhs.latitude;
+
+  if (name)
+    delete [] name;
+
+  if (rhs.name)
+  {
+    name = new char[strlen(rhs.name) + 1];
+    strcpy(name, rhs.name);
+  } // if (rhs.name)
+
+  if (state)
+    delete [] state;
+
+  if (rhs.state)
+  {
+    state = new char[strlen(rhs.state) + 1];
+    strcpy(state, rhs.state);
+  } // if (rhs.state)
+
+  strcpy(airport, rhs.airport);
+  population = rhs.population;
+  return *this;
+} // operator=
 
 void City::calcDistance(const City *city1)const
 {
@@ -32,8 +60,8 @@ void City::calcDistance(const City *city1)const
   if (distance < 100)
     passengers = 0;
 
-  cout<<distance<<" passengers fly the "<<city1->name<<" miles from\n"
-      <<passengers<<","<<city1->state<<" to "<<name<<","<<state<<"\n";
+  cout<<passengers<<" passengers fly the "<<distance<<" miles from\n"
+      <<city1->name<<","<<city1->state<<" to "<<name<<","<<state<<"\n";
   
 }  // calcDistance())
 
@@ -62,7 +90,6 @@ bool City::isEqual(const City *city)
   return false;
 }  // isName()
 
-//<---------------------------------------------------------do
 void City::readCity(fstream *fp)
 {
   string line;
