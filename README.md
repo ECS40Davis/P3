@@ -12,11 +12,9 @@ Progress:
 2. Replace printf with cout statements.
 3. Replace scanf with cin statements.
 4. Changed structs to classes.
+5. File manipulation from C -> C++
 
 To do:
-- 1.3 Replace FILE* declarations and assignments with ifstream declarations.
-- 1.4 Replace fgets with getline. Note that getline does not place the '\n' in the array.
-- 3.3 Change fopen() to an ifstream constructor, printf() to cout <<, scanf to cin >>, and fgets() to getline().
 - 4.1.4 Make initialize() the constructor for the class.
 - 4.1.5 Make deallocate() the destructor for the class.
 - 4.2.3 Make initialize() the constructor. Note that constructors have no return value.
