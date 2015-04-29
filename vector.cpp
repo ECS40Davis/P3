@@ -1,21 +1,12 @@
 // Author: Sean Davis
 
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "vector.h"
-using namespace std;
 
 void Vector::initialize()
 {
   size = 10;
   count = 0;
-  cityArray = (City*) malloc(size * sizeof(City));
+  cityArray = new City[size];
   
   for (int i = 0; i < size; i++)
     cityArray->initialize();
@@ -26,8 +17,8 @@ void Vector::deallocate()
 {
   for (int i = 0; i < count; i++)
     cityArray->deallocate();
-  
-  free(cityArray);//<-------------------------------delete
+
+  delete [] cityArray;
 }  // deallocate())
 
 
@@ -64,7 +55,7 @@ int Vector::findAirport(const char* airpor)const
     if (cityArray[i].isEqual(&city))
       return i;
   
-  printf("%s is not a valid airport.\n", airpor);
+  cout<<airpor<<" is not a valid airport.\n";
   return -1;
 }  // findAirport()
 
@@ -74,7 +65,10 @@ void Vector::readAirports()
   char line[1000];
   City city;
   city.initialize();
+  
   FILE *fp = fopen("airportLL.txt", "r");
+//  fstream file;
+//  file.open("airportLL.txt");
 
   while (fgets(line, 1000, fp))
   {
@@ -103,29 +97,31 @@ void Vector::readCities()
   {
     if (size == count)
       resize();
-  
+
     cityArray[count++].readCity(fp);
+
   } // while more in file
   
   count--;
   fclose(fp);
+
 }  // readCities()
 
 
 void Vector::resize()
 {
   int i;
-  City *temp = (City*) malloc(sizeof(City) * 2 * size);
+  City *temp = new City[2 * size];
   
   for (i = 0; i < size; i++)
     temp[i] = cityArray[i];
   
   size *= 2;
   
-  for (i = 0; i < size; i++)
+  for ( ;i < size; i++)
     temp[i].initialize();
     
-  free(cityArray);
+  delete [] cityArray;
   cityArray = temp;
 }  // resize()
 
