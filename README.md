@@ -39,3 +39,4 @@ Helpful Hints:
 - const char * to char *: http://www.cplusplus.com/forum/general/32861/ or http://stackoverflow.com/questions/289347/using-strtok-with-a-stdstring
   - ex. char *dup = strdup(str.c_str());
 - strtok with strings: http://stackoverflow.com/questions/289347/using-strtok-with-a-stdstring
+- fstream reference: http://www.cplusplus.com/reference/fstream/fstream/
