@@ -25,7 +25,7 @@ public:
   bool hasAirport();
   bool isEqual(const City *city);
   void readAirport(char *line);
-  void readCity(FILE *fp);
+  void readCity(fstream *fp);
   void setAirport(const char *airport);
 };//endclass
 #endif	// CITY_H 
