@@ -28,10 +28,10 @@ To do:
 Fixed Errors:
 
 1. error: passing XXX as 'this' argument of XXX discard qualifiers
-- You're passing in a const but the function does not guarantee it is not going to change the variable.
+  - You're passing in a const but the function does not guarantee it is not going to change the variable.
 
 2. error: name lookup of 'i' changed ISO 'for' scoping [-fpermissive]
-- You're trying to access a variable not in the scope. (You've declared something in a for loop but you're trying to access it outside of the for loop.)
+  - You're trying to access a variable not in the scope. (You've declared something in a for loop but you're trying to access it outside of the for loop.)
 
 Helpful Hints:
 - String to char *: http://stackoverflow.com/questions/347949/how-to-convert-a-stdstring-to-const-char-or-char
