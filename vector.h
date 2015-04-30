@@ -11,7 +11,7 @@ using namespace std;
 
 class Vector
 {
-private:
+public:
   City *cityArray;
   int size;
   int count;
@@ -29,5 +29,5 @@ public:
   int getChoice()const;
   void calcAirportTraffic()const;
   void cmpCity()const;
-};// Vector
+}; // Vector
 #endif	// VECTOR_H 
