@@ -112,3 +112,92 @@ void Vector::resize()
   cityArray = temp;
 }  // resize()
 
+int Vector::getChoice()const
+{
+    char input[79];
+    int choice;
+    // Menu
+    cout<<"\nFlight Simulator Menu\n";
+    cout<<"0. Done.\n";
+    cout<<"1. Determine distance and passengers between two airports.\n";
+    cout<<"2. Determine all traffic from one airport.\n\n";
+    cout<<"Your choice (0-2): ";
+    
+    cin>>input;
+    cin.ignore(256,'\n');
+
+    if (isdigit(input[0]))
+    {
+        choice = atoi(input);
+        switch (choice)
+        {
+            case 0:
+                return 0;
+            case 1:
+                return 1;
+            case 2:
+                return 2;
+            default:
+                cout<<"Your choice must be between 0 and 2. Please try again.";
+                return -1;       
+        }//switch (input)
+    }//if (isdigit(input[0])
+    else
+    {
+        cout<<"Your choice must be between 0 and 2. Please try again." ;
+        return -1;
+    }
+} // getChoice()
+
+void Vector::calcAirportTraffic()const
+{
+  char airport1[80];
+  int index;
+
+  
+  cout<<"\nPlease enter an airport abbreviation (XXX): ";
+  cin>>airport1;
+
+  index = findAirport(airport1);
+
+  if (index >= 0)
+  {
+
+    for(int i = 0; i < count; i++)
+    {
+
+      if (i != index)
+        cityArray[index].calcAirportTraffic(&cityArray[i]);
+//        cityArray->calcAirportTraffic(index, i);
+    } // if not the same airport
+  } // if airport exists
+} // calcAirportTraffic()
+
+void Vector::cmpCity()const
+{
+
+  char airport1[80], airport2[80];
+  int index1, index2;
+  cout<<"\nPlease enter two airport abbreviations (XXX XXX): ";
+  cin>>airport1>>airport2;
+    
+  index1 = findAirport(airport1);
+  index2 = findAirport(airport2);
+    
+  if (index1 >= 0 && index2 >= 0)
+    calcDistance(index1, index2);
+} // cmpCity()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
