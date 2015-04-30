@@ -81,8 +81,9 @@ bool City::hasAirport()
 
 bool City::isEqual(const City *city)const
 {
-  if (city->name && name)
-    return strcmp(city->name, name) == 0;
+  if ((city->name && name) && (city->state && state))
+    return ((strcmp(city->name, name) == 0) && \
+            (strcmp(city->state, state) == 0));
   
   if (city->airport[0] && airport[0])
     return strcmp(city->airport, airport) == 0;
@@ -114,7 +115,7 @@ void City::readCity(fstream *fp)
   delete [] line_copy;
 }  // readCity()
 
-void City::readAirport(char *line)
+void City::readAirport(char *line, char *stat)
 {
   char *ptr;
   
@@ -125,6 +126,8 @@ void City::readAirport(char *line)
   ptr = strtok(NULL, ",") + 1;
   name = new char[strlen(ptr) + 1];
   strcpy(name, ptr);
+  state = new char[strlen(stat) + 1];
+  strcpy(state, stat);
 }  // readAirport
 
 
@@ -133,7 +136,7 @@ void City::setAirport(const char *airpor)
   strcpy(airport, airpor);
 }  // setAirport()
 
-void City::calcAirportTraffic(const City *city1)const
+int City::calcAirportTraffic(const City *city1)const
 {
   int distance, passengers;
   
@@ -147,4 +150,5 @@ void City::calcAirportTraffic(const City *city1)const
     passengers = 0;
 
   cout << city1->name << ", " << city1->state << ": " << passengers << "\n";
+  return passengers;
 }  // calcAirportTraffic())
