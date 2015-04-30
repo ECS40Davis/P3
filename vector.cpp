@@ -25,13 +25,16 @@ void Vector::cleanCities()
   
   while (i < count)
   {
+
     if (!cityArray[i].hasAirport())
     {
       cityArray[i] = cityArray[--count];
     }  // if city does not have an airport
+
     else // city has an airport
       i++;
   }  // while more in array
+
 }  // cleanCities())
 
 
@@ -45,7 +48,7 @@ int Vector::findAirport(const char* airpor)const
     if (cityArray[i].isEqual(&city))
       return i;
   
-  cout<<airpor<<" is not a valid airport.\n";
+  cout << airpor << " is not a valid airport.\n";
   return -1;
 }  // findAirport()
 
@@ -59,23 +62,29 @@ void Vector::readAirports()
 
   while (std::getline(file, line))
   {
+
     if (line[0] == '[')
     {
-      char * temp = new char[line.size()+1];
+      char * temp = new char[line.size() + 1];
       copy(line.begin(), line.end(), temp);
       temp[line.size()] = '\0';
       city.readAirport(temp);
       
       for (int i = 0; i < count; i++)
       {
+
         if (cityArray[i].isEqual(&city))
         {
           cityArray[i].copyLocation(&city);
           break;
         }  // if found a matching name
-      }
+
+      } // for all cities
+
     }  // if an airport line
+
   }  // while
+
 }  // readAirports()
 
 void Vector::readCities()
@@ -89,12 +98,10 @@ void Vector::readCities()
       resize();
 
     cityArray[count++].readCity(&file);
-
   } // while more in file
   
   count--;
   file.close();
-
 }  // readCities()
 
 
@@ -102,10 +109,11 @@ void Vector::resize()
 {
   int i;
   City *temp = new City[2 * size];
+
   for (i = 0; i < size; i++)
   {
     temp[i] = cityArray[i];
-  }
+  } // for all cities
   
   size *= 2;
   delete [] cityArray;
@@ -117,18 +125,19 @@ int Vector::getChoice()const
     char input[79];
     int choice;
     // Menu
-    cout<<"\nFlight Simulator Menu\n";
-    cout<<"0. Done.\n";
-    cout<<"1. Determine distance and passengers between two airports.\n";
-    cout<<"2. Determine all traffic from one airport.\n\n";
-    cout<<"Your choice (0-2): ";
+    cout << "\nFlight Simulator Menu\n";
+    cout << "0. Done.\n";
+    cout << "1. Determine distance and passengers between two airports.\n";
+    cout << "2. Determine all traffic from one airport.\n\n";
+    cout << "Your choice (0 - 2): ";
     
     cin>>input;
-    cin.ignore(256,'\n');
+    cin.ignore(256, '\n');
 
     if (isdigit(input[0]))
     {
         choice = atoi(input);
+
         switch (choice)
         {
             case 0:
@@ -138,15 +147,19 @@ int Vector::getChoice()const
             case 2:
                 return 2;
             default:
-                cout<<"Your choice must be between 0 and 2. Please try again.";
-                return -1;       
+                cout << "Your choice must be between 0 and 2.\
+                        Please try again.\n";
+                return -1;   
         }//switch (input)
+
     }//if (isdigit(input[0])
-    else
+
+    else // not a digit
     {
-        cout<<"Your choice must be between 0 and 2. Please try again." ;
+        cout << "Your choice must be between 0 and 2. Please try again.\n" ;
         return -1;
-    }
+    }// else
+
 } // getChoice()
 
 void Vector::calcAirportTraffic()const
@@ -155,7 +168,7 @@ void Vector::calcAirportTraffic()const
   int index;
 
   
-  cout<<"\nPlease enter an airport abbreviation (XXX): ";
+  cout << "\nPlease enter an airport abbreviation (XXX): ";
   cin>>airport1;
 
   index = findAirport(airport1);
@@ -163,14 +176,16 @@ void Vector::calcAirportTraffic()const
   if (index >= 0)
   {
 
-    for(int i = 0; i < count; i++)
+    for (int i = 0; i < count; i++)
     {
 
       if (i != index)
         cityArray[index].calcAirportTraffic(&cityArray[i]);
 //        cityArray->calcAirportTraffic(index, i);
     } // if not the same airport
+
   } // if airport exists
+
 } // calcAirportTraffic()
 
 void Vector::cmpCity()const
@@ -178,7 +193,7 @@ void Vector::cmpCity()const
 
   char airport1[80], airport2[80];
   int index1, index2;
-  cout<<"\nPlease enter two airport abbreviations (XXX XXX): ";
+  cout << "\nPlease enter two airport abbreviations (XXX XXX): ";
   cin>>airport1>>airport2;
     
   index1 = findAirport(airport1);
