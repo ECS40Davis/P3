@@ -132,3 +132,20 @@ void City::setAirport(const char *airpor)
 {
   strcpy(airport, airpor);
 }  // setAirport()
+
+void City::calcAirportTraffic(const City *city1)const
+{
+  int distance, passengers;
+  
+  passengers = (double) city1->population * population / 250000000;
+  distance = acos(
+    sin(city1->latitude * M_PI / 180) * sin(latitude * M_PI / 180) 
+    + cos(city1->latitude * M_PI / 180) * cos(latitude * M_PI / 180)
+    * cos((city1->longitude - longitude) * M_PI / 180)) * 3963;
+  
+  if (distance < 100)
+    passengers = 0;
+
+  cout<<city1->name<<", "<<city1->state<<": "<<passengers<<"\n";
+  
+}  // calcAirportTraffic())
