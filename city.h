@@ -1,33 +1,33 @@
-#ifndef CITY_H
-#define	CITY_H
-// Author: Sean Davis
+#ifndef VECTOR_H
+#define	VECTOR_H
+// Author Sean Davis
 #include <iostream>
 #include <fstream>
-#include <cstring>
 #include <cstdlib>
-#include <cmath>
+#include <cstring>
+
+#include "city.h"
 using namespace std;
 
-class City
+class Vector
 {
 private:
-  double longitude;
-  double latitude;
-  char *name;
-  char *state;
-  char airport[4];
-  int population;
+  City *cityArray;
+  int size;
+  int count;
+
+  void resize();
 
 public:
-  City(); //default constructor
-  ~City(); //default destructor
-  City& operator=(const City &rhs);
-  void calcDistance(const City *city1)const;
-  void copyLocation(const City *srcCity);
-  bool hasAirport();
-  bool isEqual(const City *city);
-  void readAirport(char *line);
-  void readCity(fstream *fp);
-  void setAirport(const char *airport);
-};//endclass
-#endif	// CITY_H 
+  Vector(); //default constructor
+  ~Vector(); //default destructor
+  void calcDistance(int index1, int index2)const;
+  void cleanCities();
+  int findAirport(const char *airport)const;
+  void readAirports();
+  void readCities();
+  int getChoice()const;
+  void calcAirportTraffic()const;
+  void cmpCity()const;
+};// Vector
+#endif	// VECTOR_H 
