@@ -10,26 +10,24 @@ using namespace std;
 
 void run(const Vector *cities)
 {
-  char airport1[80], airport2[80];
-  int index1, index2;
-  
-//  for(index1 = 0; index1 < cities->count; index1++)
-//    for(index2 = index1 + 1; index2  < cities->count; index2++)
-//      calcDistance(cities, index1, index2);
+  int choice, exit = 0;
 
-  while (1)
+  while (!exit)
   {
-    cout<<"\nPlease enter two airport abbreviations (XXX XXX = done): ";
-    cin>>airport1>>airport2;
-    
-    if (strcmp(airport1, "XXX") == 0 && strcmp(airport2, "XXX") == 0)
-      break;
-    
-    index1 = cities->findAirport(airport1);
-    index2 = cities->findAirport(airport2);
-    
-    if (index1 >= 0 && index2 >= 0)
-      cities->calcDistance(index1, index2);
+    choice = cities->getChoice();
+    switch (choice)
+    {
+      case 0:
+        exit = 1;
+        break;
+      case 1:
+        cities->cmpCity();
+        break;
+      case 2:
+        cities->calcAirportTraffic();
+        break;
+    }
+
   }  // infinite while loop
 }  // run())
 
