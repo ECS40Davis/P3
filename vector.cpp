@@ -1,150 +1,218 @@
+// Author: Sean Davis
 
-#include "city.h"
+#include "vector.h"
 
-City::City():name(NULL), state(NULL)
+Vector::Vector():size(10), count(0)
 {
-  airport[0] = '\0';  // sentinel value
-} // default constructor
+  cityArray = new City[size];
+}  // default constructor
 
 
-City::~City()
+Vector::~Vector()
 {
-  if (name)
-    delete [] name;
+  delete [] cityArray;
+}  // deallocate())
 
-  if (state)
-    delete [] state;
-}  // default destructor
 
-City& City::operator=(const City &rhs)
+void Vector::calcDistance(int index1, int index2)const
 {
-  if (this == &rhs)
-    return *this;
+  cityArray[index2].calcDistance(&cityArray[index1]);
+}  // calcDistance()
 
-  longitude = rhs.longitude;
-  latitude = rhs.latitude;
-
-  if (name)
-    delete [] name;
-
-  if (rhs.name)
+void Vector::cleanCities()
+{
+  int i = 0;
+  
+  while (i < count)
   {
-    name = new char[strlen(rhs.name) + 1];
-    strcpy(name, rhs.name);
-  } // if (rhs.name)
 
-  if (state)
-    delete [] state;
+    if (!cityArray[i].hasAirport())
+    {
+      cityArray[i] = cityArray[--count];
+    }  // if city does not have an airport
 
-  if (rhs.state)
-  {
-    state = new char[strlen(rhs.state) + 1];
-    strcpy(state, rhs.state);
-  } // if (rhs.state)
+    else // city has an airport
+      i++;
+  }  // while more in array
 
-  strcpy(airport, rhs.airport);
-  population = rhs.population;
-  return *this;
-} // operator=
+}  // cleanCities())
 
-void City::calcDistance(const City *city1)const
+
+int Vector::findAirport(const char* airpor)const
 {
-  int distance, passengers;
+  City city;
+
+  city.setAirport(airpor);
   
-  passengers = (double) city1->population * population / 2500000000;
-  distance = acos(
-    sin(city1->latitude * M_PI / 180) * sin(latitude * M_PI / 180) 
-    + cos(city1->latitude * M_PI / 180) * cos(latitude * M_PI / 180)
-    * cos((city1->longitude - longitude) * M_PI / 180)) * 3963;
+  for (int i = 0; i < count; i++)
+    if (cityArray[i].isEqual(&city))
+      return i;
   
-  if (distance < 100)
-    passengers = 0;
+  cout << airpor << " is not a valid airport.\n";
+  return -1;
+}  // findAirport()
 
-  cout << passengers << " passengers fly the " << distance << " miles from\n"
-      << city1->name << ", " << city1->state << " to " << name << ", " << state
-      << ".\n";
-}  // calcDistance())
-
-void City::copyLocation(const City *srcCity)
-{
-  strcpy(airport, srcCity->airport);
-  latitude = srcCity->latitude;
-  longitude = srcCity->longitude;
-}  // copyLocation()
-
-
-bool City::hasAirport()
-{
-  return this->airport[0] != '\0';
-}  // hasAirport()
-
-
-bool City::isEqual(const City *city)const
-{
-  if (city->name && name)
-    return strcmp(city->name, name) == 0;
-  
-  if (city->airport[0] && airport[0])
-    return strcmp(city->airport, airport) == 0;
-  
-  return false;
-}  // isName()
-
-void City::readCity(fstream *fp)
+void Vector::readAirports()
 {
   string line;
-  char *ptr;
-  
-  if (!getline(*fp, line) || !strstr(line.c_str(), ","))
-    return;
+  City city;
 
-  char *line_copy = strdup(line.c_str());
-  ptr = strtok(line_copy, ",");
-  
-  if (ptr)
-  {  
-    name = new char[strlen(ptr) + 1];
-    strcpy(name, ptr);
-    ptr = strtok(NULL, ",");
-    state = new char[strlen(ptr) + 1];
-    strcpy(state, ptr);
-    population = atoi(strtok(NULL, ",\n"));
-  } // if something on line
+  fstream file;
+  file.open("airportLL.txt");
 
-  delete [] line_copy;
-}  // readCity()
+  while (std::getline(file, line))
+  {
 
-void City::readAirport(char *line)
+    if (line[0] == '[')
+    {
+      char * temp = new char[line.size() + 1];
+      copy(line.begin(), line.end(), temp);
+      temp[line.size()] = '\0';
+      city.readAirport(temp);
+      
+      for (int i = 0; i < count; i++)
+      {
+
+        if (cityArray[i].isEqual(&city))
+        {
+          cityArray[i].copyLocation(&city);
+          break;
+        }  // if found a matching name
+
+      } // for all cities
+
+    }  // if an airport line
+
+  }  // while
+
+}  // readAirports()
+
+void Vector::readCities()
 {
-  char *ptr;
+  fstream file;
+  file.open("citypopulations.csv");
+
+  while(!file.eof())
+  {
+    if (size == count)
+      resize();
+
+    cityArray[count++].readCity(&file);
+  } // while more in file
   
-  strtok(line, "] ");
-  strcpy(airport, &line[1]);
-  latitude = atof(strtok(NULL, " "));
-  longitude = atof(strtok(NULL, " "));
-  ptr = strtok(NULL, ",") + 1;
-  name = new char[strlen(ptr) + 1];
-  strcpy(name, ptr);
-}  // readAirport
+  count--;
+  file.close();
+}  // readCities()
 
 
-void City::setAirport(const char *airpor)
+void Vector::resize()
 {
-  strcpy(airport, airpor);
-}  // setAirport()
+  int i;
+  City *temp = new City[2 * size];
 
-void City::calcAirportTraffic(const City *city1)const
+  for (i = 0; i < size; i++)
+  {
+    temp[i] = cityArray[i];
+  } // for all cities
+  
+  size *= 2;
+  delete [] cityArray;
+  cityArray = temp;
+}  // resize()
+
+int Vector::getChoice()const
 {
-  int distance, passengers;
-  
-  passengers = (double) city1->population * population / 2500000000;
-  distance = acos(
-    sin(city1->latitude * M_PI / 180) * sin(latitude * M_PI / 180) 
-    + cos(city1->latitude * M_PI / 180) * cos(latitude * M_PI / 180)
-    * cos((city1->longitude - longitude) * M_PI / 180)) * 3963;
-  
-  if (distance < 100)
-    passengers = 0;
+    char input[79];
+    int choice;
+    // Menu
+    cout << "\nFlight Simulator Menu\n";
+    cout << "0. Done.\n";
+    cout << "1. Determine distance and passengers between two airports.\n";
+    cout << "2. Determine all traffic from one airport.\n\n";
+    cout << "Your choice (0 - 2): ";
+    
+    cin>>input;
+    cin.ignore(256, '\n');
 
-  cout << city1->name << ", " << city1->state << ": " << passengers << "\n";
-}  // calcAirportTraffic())
+    if (isdigit(input[0]))
+    {
+        choice = atoi(input);
+
+        switch (choice)
+        {
+            case 0:
+                return 0;
+            case 1:
+                return 1;
+            case 2:
+                return 2;
+            default:
+                cout << "Your choice must be between 0 and 2.\
+                        Please try again.\n";
+                return -1;   
+        }//switch (input)
+
+    }//if (isdigit(input[0])
+
+    else // not a digit
+    {
+        cout << "Your choice must be between 0 and 2. Please try again.\n" ;
+        return -1;
+    }// else
+
+} // getChoice()
+
+void Vector::calcAirportTraffic()const
+{
+  char airport1[80];
+  int index;
+
+  
+  cout << "\nPlease enter an airport abbreviation (XXX): ";
+  cin>>airport1;
+
+  index = findAirport(airport1);
+
+  if (index >= 0)
+  {
+
+    for (int i = 0; i < count; i++)
+    {
+
+      if (i != index)
+        cityArray[index].calcAirportTraffic(&cityArray[i]);
+//        cityArray->calcAirportTraffic(index, i);
+    } // if not the same airport
+
+  } // if airport exists
+
+} // calcAirportTraffic()
+
+void Vector::cmpCity()const
+{
+
+  char airport1[80], airport2[80];
+  int index1, index2;
+  cout << "\nPlease enter two airport abbreviations (XXX XXX): ";
+  cin>>airport1>>airport2;
+    
+  index1 = findAirport(airport1);
+  index2 = findAirport(airport2);
+    
+  if (index1 >= 0 && index2 >= 0)
+    calcDistance(index1, index2);
+} // cmpCity()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
