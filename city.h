@@ -26,9 +26,9 @@ public:
   void copyLocation(const City *srcCity);
   bool hasAirport();
   bool isEqual(const City *city)const;
-  void readAirport(char *line);
+  void readAirport(char *line, char *stat);
   void readCity(fstream *fp);
   void setAirport(const char *airport);
-  void calcAirportTraffic(const City *city1)const;
+  int calcAirportTraffic(const City *city1)const;
 }; //endclass
 #endif	// CITY_H 
