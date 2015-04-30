@@ -1,57 +1,59 @@
+// Author: Sean Davis 
+
 #include <iostream>
 #include <fstream>
-#include <cstdio>
 #include <cstdlib>
-#include <cmath>
 #include <cstring>
+
 #include "vector.h"
 using namespace std;
 
-void run(Vector *cities);
-                      
-int main()
+void run(const Vector *cities)
 {
-    Vector *cities = new Vector;
-	    
-    cities->initialize();
-    cities->readCities();
-    cities->readAirports();
-    run(cities);
-    
-    return 0;
-    
-} // main()
-                      
-void run(Vector *cities)
-{
-    char abv1[10], abv2[10];
-    //double passengers;
-    //double distance;
-    
-    while (1)
-    {
-        cout<<"\nPlease enter two airport abbreviations (XXX XXX = done): ";
-        cin>>abv1>>abv2;
+  int choice, exit = 0;
 
-        if (strcmp(abv1, "XXX") == 0 && strcmp(abv2, "XXX") == 0)
-            break;
-        
-        if (strcmp(cities->returnStateName(abv1), "State Name Not Found") == 0)
-            cout<<abv1<<" is not a valid airport.\n";
-        
-        if (strcmp(cities->returnStateName(abv2), "State Name Not Found") == 0)
-            cout<<abv2<<" is not a valid airport.\n";
-        
-        if (strcmp(cities->returnStateName(abv1), "State Name Not Found") != 0
-            && strcmp(cities->returnStateName(abv2),
-            "State Name Not Found") != 0)
-        {    
-                cities->calcDistance(abv1, abv2);
-                cout<<cities->returnname(abv1)<<","
-                <<cities->returnStateName(abv1)<<" to "
-                <<cities->returnname(abv2)
-                <<","<<cities->returnStateName(abv2)
-                <<"\n";
-        }//if (strcmp(cities->return
-    }//while(1)      
-} // run()
+  while (!exit)
+  {
+    choice = cities->getChoice();
+
+    switch (choice)
+    {
+      case 0:
+        exit = 1;
+        break;
+      case 1:
+        cities->cmpCity();
+        break;
+      case 2:
+        cities->calcAirportTraffic();
+        break;
+    } // switch (choice)
+
+  }  // infinite while loop
+
+}  // run())
+
+
+int main(int argc, char** argv) 
+{
+//  int i;
+
+  Vector cities;
+  cities.readCities();
+
+//  for(i = 0; i < cities.count; i++)
+//  {
+//    printf("%s %s \n", cities.cityArray[i].name, cities.cityArray[i].state);
+//  }
+
+  cities.readAirports();
+
+//  for(i = 0; i < cities.count; i++)
+//  {
+//    printf("\n%s %s %s", cities.cityArray[i].name, cities.cityArray[i].state, cities.cityArray[i].airport);
+//  }
+
+  cities.cleanCities();
+  run(&cities);
+  return 0;
+} // main())
