@@ -51,7 +51,7 @@ void City::calcDistance(const City *city1)const
 {
   int distance, passengers;
   
-  passengers = (double) city1->population * population / 250000000;
+  passengers = (double) city1->population * population / 2500000000;
   distance = acos(
     sin(city1->latitude * M_PI / 180) * sin(latitude * M_PI / 180) 
     + cos(city1->latitude * M_PI / 180) * cos(latitude * M_PI / 180)
@@ -60,9 +60,9 @@ void City::calcDistance(const City *city1)const
   if (distance < 100)
     passengers = 0;
 
-  cout<<passengers<<" passengers fly the "<<distance<<" miles from\n"
-      <<city1->name<<","<<city1->state<<" to "<<name<<","<<state<<"\n";
-  
+  cout << passengers << " passengers fly the " << distance << " miles from\n"
+      << city1->name << ", " << city1->state << " to " << name << ", " << state
+      << ".\n";
 }  // calcDistance())
 
 void City::copyLocation(const City *srcCity)
@@ -79,7 +79,7 @@ bool City::hasAirport()
 }  // hasAirport()
 
 
-bool City::isEqual(const City *city)
+bool City::isEqual(const City *city)const
 {
   if (city->name && name)
     return strcmp(city->name, name) == 0;
@@ -109,8 +109,8 @@ void City::readCity(fstream *fp)
     state = new char[strlen(ptr) + 1];
     strcpy(state, ptr);
     population = atoi(strtok(NULL, ",\n"));
-
   } // if something on line
+
   delete [] line_copy;
 }  // readCity()
 
@@ -137,7 +137,7 @@ void City::calcAirportTraffic(const City *city1)const
 {
   int distance, passengers;
   
-  passengers = (double) city1->population * population / 250000000;
+  passengers = (double) city1->population * population / 2500000000;
   distance = acos(
     sin(city1->latitude * M_PI / 180) * sin(latitude * M_PI / 180) 
     + cos(city1->latitude * M_PI / 180) * cos(latitude * M_PI / 180)
@@ -146,6 +146,5 @@ void City::calcAirportTraffic(const City *city1)const
   if (distance < 100)
     passengers = 0;
 
-  cout<<city1->name<<", "<<city1->state<<": "<<passengers<<"\n";
-  
+  cout << city1->name << ", " << city1->state << ": " << passengers << "\n";
 }  // calcAirportTraffic())
