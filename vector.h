@@ -26,5 +26,8 @@ public:
   int findAirport(const char *airport)const;
   void readAirports();
   void readCities();
+  int getChoice()const;
+  void calcAirportTraffic()const;
+  void cmpCity()const;
 };// Vector
 #endif	// VECTOR_H 
