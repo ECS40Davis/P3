@@ -56,32 +56,24 @@ void Vector::readAirports()
 {
   string line;
   City city;
-
+  char * temp_state;
   fstream file;
   file.open("airportLL.txt");
 
   while (std::getline(file, line))
   {
-
     if (line[0] == '[')
     {
-      char * temp = new char[line.size() + 1];
-      copy(line.begin(), line.end(), temp);
-      temp[line.size()] = '\0';
-      city.readAirport(temp);
-      
-      for (int i = 0; i < count; i++)
-      {
+      cpyLocation(city, line, temp_state);
+    } // if an airport line
 
-        if (cityArray[i].isEqual(&city))
+    else // if state
+      if (line[0] != '\0')
         {
-          cityArray[i].copyLocation(&city);
-          break;
-        }  // if found a matching name
-
-      } // for all cities
-
-    }  // if an airport line
+          temp_state = new char[line.size() + 1];
+          copy(line.begin(), line.end(), temp_state);
+          temp_state[line.size()] = '\0';
+        } // if state
 
   }  // while
 
@@ -147,8 +139,8 @@ int Vector::getChoice()const
             case 2:
                 return 2;
             default:
-                cout << "Your choice must be between 0 and 2.\
-                        Please try again.\n";
+                cout << "Your choice must be between 0 and 2. ";
+                cout << "Please try again.\n";
                 return -1;   
         }//switch (input)
 
@@ -165,7 +157,7 @@ int Vector::getChoice()const
 void Vector::calcAirportTraffic()const
 {
   char airport1[80];
-  int index;
+  int index, tot_passengers = 0;
 
   
   cout << "\nPlease enter an airport abbreviation (XXX): ";
@@ -180,12 +172,12 @@ void Vector::calcAirportTraffic()const
     {
 
       if (i != index)
-        cityArray[index].calcAirportTraffic(&cityArray[i]);
-//        cityArray->calcAirportTraffic(index, i);
+        tot_passengers += cityArray[index].calcAirportTraffic(&cityArray[i]);
     } // if not the same airport
 
+  cout << "Total passengers: " << tot_passengers << endl;
   } // if airport exists
-
+ 
 } // calcAirportTraffic()
 
 void Vector::cmpCity()const
@@ -203,9 +195,24 @@ void Vector::cmpCity()const
     calcDistance(index1, index2);
 } // cmpCity()
 
+void Vector::cpyLocation(City city, string line, char *temp_state)
+{
+  char * temp = new char[line.size() + 1];
+  copy(line.begin(), line.end(), temp);
+  temp[line.size()] = '\0';
+  city.readAirport(temp, temp_state);
+      
+  for (int i = 0; i < count; i++)
+  {
+    if (cityArray[i].isEqual(&city))
+    {
+      cityArray[i].copyLocation(&city);
+      break;
+    }  // if found a matching name
 
+  } // for all cities
 
-
+} // cpyLocation(City city, string line, char *temp_state)
 
 
 
