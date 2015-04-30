@@ -15,6 +15,7 @@ void run(const Vector *cities)
   while (!exit)
   {
     choice = cities->getChoice();
+
     switch (choice)
     {
       case 0:
@@ -26,25 +27,33 @@ void run(const Vector *cities)
       case 2:
         cities->calcAirportTraffic();
         break;
-    }
+    } // switch (choice)
 
   }  // infinite while loop
+
 }  // run())
 
 
 int main(int argc, char** argv) 
 {
+//  int i;
+
   Vector cities;
   cities.readCities();
-  cities.readAirports();
-  cities.cleanCities();
 
-//  srand(1);
-//  int i;
-//  for(i = 0; i < cities.count; i++){
-    //printf("%s %s\n", cities.cityArray[i].airport, cities.cityArray[rand() % cities.count].airport);
-//    printf("%s %s %d %lf\n", cities.cityArray[i].name, cities.cityArray[i].state, cities.cityArray[i].population, cities.cityArray[i].longitude);
+//  for(i = 0; i < cities.count; i++)
+//  {
+//    printf("%s %s \n", cities.cityArray[i].name, cities.cityArray[i].state);
 //  }
+
+  cities.readAirports();
+
+//  for(i = 0; i < cities.count; i++)
+//  {
+//    printf("\n%s %s %s", cities.cityArray[i].name, cities.cityArray[i].state, cities.cityArray[i].airport);
+//  }
+
+  cities.cleanCities();
   run(&cities);
   return 0;
 } // main())
