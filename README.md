@@ -3,8 +3,8 @@ Converting C to C++
 
 Naming Convention:
 
-_* = original code
- * = Sean Davis' modified code
+_* = handin code
+ * = correct code
 
 Progress: 
 
@@ -14,9 +14,7 @@ Progress:
 4. Changed structs to classes.
 5. File manipulation from C -> C++
 6. Created default constructor and destructor.
-
-To do:
-- 6 Adding the ability to list all of the traffic from a specific airport. 
+7. Adding the ability to list all of the traffic from a specific airport. 
 
 Fixed Errors:
 
