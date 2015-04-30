@@ -29,5 +29,6 @@ public:
   int getChoice()const;
   void calcAirportTraffic()const;
   void cmpCity()const;
+  void cpyLocation(City city, string line, char *temp_state);
 }; // Vector
 #endif	// VECTOR_H 
