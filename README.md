@@ -26,6 +26,9 @@ Fixed Errors:
 2. error: name lookup of 'i' changed ISO 'for' scoping [-fpermissive]
   - You're trying to access a variable not in the scope. (You've declared something in a for loop but you're trying to access it outside of the for loop.)
 
+3. double free or corruption (fasttop) c++
+  - You're trying to delete something twice. Don't call delete, it will automatically delete when the function is terminated.
+
 Helpful Hints:
 - String to char *: http://stackoverflow.com/questions/347949/how-to-convert-a-stdstring-to-const-char-or-char
 - sscanf double = %lf
